@@ -21,7 +21,7 @@
     "seed": "ts-node -r tsconfig-paths/register --compiler-options {\"module\":\"CommonJS\"} src/infrastructure/db/seed.ts"
   },
   "dependencies": {
-    "@prisma/client": "^4.8.0",
+    "@prisma/client": "^4.8.1",
     "@radix-ui/react-alert-dialog": "^1.0.2",
     "@radix-ui/react-avatar": "^1.0.1",
     "@radix-ui/react-checkbox": "^1.0.1",
@@ -40,7 +40,7 @@
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "classix": "^2.1.17",
-    "prisma": "^4.8.0",
+    "prisma": "^4.8.1",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",

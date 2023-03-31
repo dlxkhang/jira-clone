@@ -19,7 +19,7 @@ export const ProjectView = ({
   const sectionTitle = sectionTitles[section] || sectionTitles[defaultSection];
 
   return (
-    <div className="relative flex h-full flex-grow">
+    <div className="relative flex h-full flex-grow overflow-x-auto">
       <Sidebar
         projectName={name}
         projectDescription={description || "Description undefined"}

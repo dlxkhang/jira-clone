@@ -57,6 +57,8 @@ export const getProject = async (
     },
   });
 
+  console.log(projectDb);
+
   if (!projectDb) {
     return null;
   }

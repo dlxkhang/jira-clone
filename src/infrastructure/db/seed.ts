@@ -125,6 +125,7 @@ const seedProjects = async () => {
     console.info(`Created PROJECT: ${project.name}`);
 
     for (const category of project.categories) {
+      console.log(category);
       const categoryDb = await createCategoryIfNotExists(category, projectDb.id);
       if (recordAlreadyExists(categoryDb)) {
         console.info(`Category already exists: ${category.name}. Skipping...`);

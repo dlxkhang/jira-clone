@@ -1,6 +1,6 @@
 import { useState } from "react";
 import * as Select from "@radix-ui/react-select";
-import { PriorityId, prioritiesMock } from "@domain/priority";
+import { PriorityStatus, prioritiesMock } from "@domain/priority";
 import { PriorityIcon } from "@app/components/priority-icon";
 import {
   SelectTrigger,
@@ -11,10 +11,10 @@ import {
 } from "@app/components/select";
 
 export const SelectPriority = ({ initPriority }: Props): JSX.Element => {
-  const [selectValue, setSelectValue] = useState<PriorityId>(initPriority);
+  const [selectValue, setSelectValue] = useState<PriorityStatus>(initPriority);
 
   const onValueChange = (value: string) => {
-    const priority = value as PriorityId;
+    const priority = value as PriorityStatus;
     setSelectValue(priority);
   };
 
@@ -54,5 +54,5 @@ export const SelectPriority = ({ initPriority }: Props): JSX.Element => {
 };
 
 interface Props {
-  initPriority: PriorityId;
+  initPriority: PriorityStatus;
 }

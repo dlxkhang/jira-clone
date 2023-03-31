@@ -1,6 +1,6 @@
 import cx from "classix";
 import { HiFlag } from "react-icons/hi";
-import { PriorityId } from "@domain/priority";
+import { PriorityStatus } from "@domain/priority";
 
 export const PriorityIcon = ({
   priority,
@@ -19,6 +19,6 @@ export const PriorityIcon = ({
 );
 
 interface PriorityIconProps {
-  priority: PriorityId;
+  priority: PriorityStatus;
   size?: number;
 }

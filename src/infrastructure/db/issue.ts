@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import { UserId } from "@domain/user";
 import { CategoryType, CategoryId } from "@domain/category";
 import { IssueId, Issue } from "@domain/issue";
-import { Priority, PriorityId } from "@domain/priority";
+import { Priority, PriorityStatus } from "@domain/priority";
 import { Comment } from "@domain/comment";
 import { dnull } from "src/utils/dnull";
 import { db } from "./db.server";
@@ -61,7 +61,7 @@ export type CreateIssueInputData = {
   name: string;
   description: string;
   categoryId: CategoryId;
-  priority: PriorityId;
+  priority: PriorityStatus;
   asigneeId: UserId;
   reporterId: UserId;
   comments: Comment[];

@@ -1,6 +1,8 @@
-export type PriorityId = "low" | "medium" | "high";
+export type PriorityStatus = "low" | "medium" | "high";
+
 export type Priority = {
-  id: PriorityId;
-  name: string;
+  id: string;
+  name: PriorityStatus;
   order: number;
-};
+}
+  

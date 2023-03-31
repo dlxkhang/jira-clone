@@ -13,7 +13,7 @@ import { ProjectId } from "@domain/project";
 import { CategoryId } from "@domain/category";
 import { Issue, IssueId } from "@domain/issue";
 import { Comment, CommentId } from "@domain/comment";
-import { PriorityId } from "@domain/priority";
+import { PriorityStatus } from "@domain/priority";
 import { isValidSort } from "@domain/filter";
 import {
   getIssue,
@@ -104,7 +104,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     const name = formData.get("title") as string;
     const description = formData.get("description") as string;
     const categoryId = formData.get("status") as CategoryId;
-    const priority = formData.get("priority") as PriorityId;
+    const priority = formData.get("priority") as PriorityStatus;
     const asigneeId = formData.get("asignee") as UserId;
     const reporterId = formData.get("reporter") as UserId;
     const comments = JSON.parse(
@@ -163,14 +163,14 @@ export function CatchBoundary() {
       <Dialog.Portal>
         <Dialog.Overlay
           className={cx(
-            "absolute top-0 left-0 z-50 box-border grid h-full w-full place-items-center overflow-y-auto bg-black bg-opacity-50 py-[40px] px-[40px]",
+            "absolute left-0 top-0 z-50 box-border grid h-full w-full place-items-center overflow-y-auto bg-black bg-opacity-50 px-[40px] py-[40px]",
             "radix-state-open:animate-fade-in duration-300"
           )}
         >
           <Dialog.Content
             onPointerDownOutside={handleProgrammaticNavigation}
             className={cx(
-              "relative z-50 flex rounded-md bg-white py-12 px-20 shadow-lg flex-center dark:bg-dark-300",
+              "relative z-50 flex rounded-md bg-white px-20 py-12 shadow-lg flex-center dark:bg-dark-300",
               "duration-300 radix-state-open:animate-slide-up"
             )}
           >
