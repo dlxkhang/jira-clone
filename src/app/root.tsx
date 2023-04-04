@@ -1,5 +1,7 @@
 import { CSSProperties, useEffect } from "react";
 import type { MetaFunction, LoaderFunction } from "@remix-run/node";
+import { ClerkApp, ClerkCatchBoundary } from "@clerk/remix";
+import { rootAuthLoader } from "@clerk/remix/ssr.server";
 import { json } from "@remix-run/node";
 import {
   Links,
@@ -65,13 +67,16 @@ type LoaderData = {
   theme?: Theme;
   preference?: Preference;
 };
-export const loader: LoaderFunction = async ({ request }) => {
-  const themeSession = await getThemeSession(request);
-  const { theme, preference } = themeSession.getTheme();
-  return json<LoaderData>({ theme, preference });
+
+export const loader: LoaderFunction = (args) => {
+  return rootAuthLoader(args, async ({ request }) => {
+    const themeSession = await getThemeSession(request);
+    const { theme, preference } = themeSession.getTheme();
+    return json<LoaderData>({ theme, preference });
+  });
 };
 
-export default function AppWithProviders() {
+export function AppWithProviders() {
   const { theme, preference } = useLoaderData<LoaderData>();
   return (
     <ThemeProvider specifiedTheme={theme} specifiedPreference={preference}>
@@ -166,7 +171,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
   );
 }
 
-export function CatchBoundary() {
+export function CustomCatchBoundary() {
   return (
     <html>
       <head>
@@ -185,3 +190,5 @@ export function CatchBoundary() {
     </html>
   );
 }
+export const CatchBoundary = ClerkCatchBoundary(CustomCatchBoundary);
+export default ClerkApp(AppWithProviders);

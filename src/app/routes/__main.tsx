@@ -5,14 +5,14 @@ import { User } from "@domain/user";
 import { getUserSession } from "@app/session-storage/user-storage.server";
 import { getUser } from "@infrastructure/db/user";
 import { MainLayout } from "@app/ui/main";
+import { getAuth } from "@clerk/remix/ssr.server";
 
 type LoaderData = {
   user: User;
 };
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const userSession = await getUserSession(request);
-  const userId = userSession.getUser();
+export const loader: LoaderFunction = async (args) => {
+  const { userId, sessionId } = await getAuth(args);
 
   if (!userId) {
     return redirect("/login");

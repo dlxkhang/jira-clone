@@ -21,6 +21,7 @@
     "seed": "ts-node -r tsconfig-paths/register --compiler-options {\"module\":\"CommonJS\"} src/infrastructure/db/seed.ts"
   },
   "dependencies": {
+    "@clerk/remix": "^2.5.0",
     "@prisma/client": "^4.8.1",
     "@radix-ui/react-alert-dialog": "^1.0.2",
     "@radix-ui/react-avatar": "^1.0.1",

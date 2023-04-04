@@ -5,6 +5,7 @@ import { User } from "@domain/user";
 import { getUsers } from "@infrastructure/db/user";
 import { getUserSession } from "@app/session-storage";
 import { LoginView } from "@app/ui/login";
+import { RegisterView } from "@app/ui/register";
 
 type LoaderData = {
   users: User[];
@@ -31,7 +32,7 @@ export const action: ActionFunction = async ({ request }) => {
   console.error("Unknown action", _action);
 };
 
-export default function LoginRoute() {
-  const { users } = useLoaderData<LoaderData>();
-  return <LoginView users={users} />;
+export default function RegisterRoute() {
+
+  return <RegisterView />;
 }

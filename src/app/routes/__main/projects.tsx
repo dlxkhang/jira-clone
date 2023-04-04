@@ -9,6 +9,7 @@ import { ProjectId, ProjectSummary } from "@domain/project";
 import { getProjectsSummary, deleteProject } from "@infrastructure/db/project";
 import { getUserSession } from "@app/session-storage";
 import { ProjectsView } from "@app/ui/main/projects";
+import { getAuth } from "@clerk/remix/ssr.server";
 
 export const meta: MetaFunction = () => {
   const title = "Jira clone - Projects";
@@ -46,13 +47,12 @@ type LoaderData = {
   projectsSummary: ProjectSummary[];
 };
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const userSession = await getUserSession(request);
-  const userId = userSession.getUser();
+export const loader: LoaderFunction = async (args) => {
+    const { userId, sessionId } = await getAuth(args);
 
-  if (!userId) {
-    return redirect("/login");
-  }
+    if (!userId) {
+      return redirect("/login");
+    }
 
   const projectsSummary = await getProjectsSummary(userId);
 
