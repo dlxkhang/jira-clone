@@ -3,7 +3,6 @@ import { usersMock } from "@domain/user";
 import { categoriesMock1, categoriesMock2 } from "@domain/category";
 
 export const projectMock1: Project = {
-  id: "61f4d3fca5c18e5d870f5b5d",
   name: "JIRA Clone",
   description: "Software project",
   users: usersMock,
@@ -14,7 +13,6 @@ export const projectMock1: Project = {
 };
 
 export const projectMock2: Project = {
-  id: "61f4d3fca5c18e5d870f5b5d",
   name: "Second project",
   description:
     "Super long description to test how it clamps on project card in the projects page and in the project sidebar",

@@ -16,7 +16,6 @@ export const todoIssuesMock1: Issue[] = [];
 
 export const inProgressIssuesMock1: Issue[] = [
   {
-    id: "61f4d3fca5c18e5d870f5b5d",
     name: "HINT: Open two tabs to see events in real time.",
     description:
       "With the same project open in two different tabs, try making some changes on one of them. The result will be reflected instantly on the other. This will happen with every other user with the app open.",
@@ -29,7 +28,6 @@ export const inProgressIssuesMock1: Issue[] = [
     updatedAt: createdAt,
   },
   {
-    id: "61f4d3fca5c18e5d870f5b5f",
     name: "HINT: Try to login and interact with different users. ",
     description:
       "This will be reflected on the UI (e. g. which user created and issue or wrote a comment). A user can only see the projects they are assigned to. You can try this by creating a new project at the /projects page. To logout, go to the avatar dropdown (top right).",
@@ -49,7 +47,6 @@ export const doneIssuesMock1: Issue[] = [
 // PROJECT 2
 export const todoIssuesMock2: Issue[] = [
   {
-    id: "f61f4d3fca5c18e5d870f53e",
     name: "Add and display issue timestamps",
     description:
       "Id should be create automatically on new Issue(). It must be displayed on issue panel, as well as an updatedAt parameter",
@@ -62,7 +59,6 @@ export const todoIssuesMock2: Issue[] = [
     updatedAt: new Date("2022-01-18 11:01").valueOf(),
   },
   {
-    id: "61f4d3fca5c18e5d870f53e2",
     name: "Add projects section and the ability to create multiple projects",
     description:
       "Router would be needed. Can create and edit project, as well as add users to that particular project",
@@ -78,7 +74,6 @@ export const todoIssuesMock2: Issue[] = [
 
 export const inProgressIssuesMock2: Issue[] = [
   {
-    id: "81261f4d3fca5c18e5d870f5",
     name: "Add dark mode",
     description: "",
     reporter: userMock1,

@@ -1,6 +1,6 @@
 import { Issue } from "@domain/issue";
 
-export type CategoryId = string;
+export type CategoryId = number;
 export type CategoryType = typeof categoryTypes[number];
 export const categoryTypes = ["TODO", "IN_PROGRESS", "READYFORREVIEW", "REVIEW", "DONE"] as const;
 

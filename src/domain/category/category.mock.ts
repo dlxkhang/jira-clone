@@ -30,15 +30,12 @@ const ids2 = [
 const issuesMock2 = [todoIssuesMock2, inProgressIssuesMock2, doneIssuesMock2];
 
 export const categoriesMock1: Category[] = categoryTypes.map((categoryType, index) => {
-  const id = ids1[index];
-  console.log(categoryType,id,index)
   const name = categoryTypeDict[categoryType];
   const type = categoryType;
   const order = index;
   const issues = issuesMock1[index] ?? [];
 
   return {
-    id,
     name,
     issues,
     type,
@@ -49,15 +46,12 @@ export const categoriesMock1: Category[] = categoryTypes.map((categoryType, inde
 });
 
 export const categoriesMock2: Category[] = categoryTypes.map((categoryType, index) => {
-  const id = ids2[index];
-  console.log(categoryType,id,index)
   const name = categoryTypeDict[categoryType];
   const type = categoryType;
   const order = index;
   const issues = issuesMock2[index] ?? [];
 
   return {
-    id,
     name,
     type,
     issues,

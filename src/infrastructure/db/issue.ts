@@ -67,15 +67,21 @@ export type CreateIssueInputData = {
   comments: Comment[];
 };
 export const createIssue = async (issue: CreateIssueInputData): Promise<IssueId> => {
+  const priority = await db.priority.findFirst({
+    where: {
+      name: issue.priority,
+    }
+  })
+  if (!priority) throw new Error('Priority not found');
+
   const newIssue = await db.issue.create({
     data: {
       ...issue,
       priority: undefined,
-      priorityId: issue.priority,
+      priorityId: priority.id,
       comments: {
         create: issue.comments.map((comment) => {
           const commentInput: Omit<Prisma.CommentCreateInput, "issue"> = {
-            id: comment.id,
             message: comment.message,
             user: { connect: { id: comment.user.id } },
           };
@@ -94,6 +100,13 @@ export const createIssue = async (issue: CreateIssueInputData): Promise<IssueId>
 
 export type UpdateIssueInputData = CreateIssueInputData & { id: IssueId };
 export const updateIssue = async (issue: UpdateIssueInputData) => {
+  const priority = await db.priority.findFirst({
+    where: {
+      name: issue.priority,
+    },
+  });
+  if (!priority) throw new Error("Priority not found");
+
   await db.issue.update({
     where: {
       id: issue.id,
@@ -101,11 +114,10 @@ export const updateIssue = async (issue: UpdateIssueInputData) => {
     data: {
       ...issue,
       priority: undefined,
-      priorityId: issue.priority,
+      priorityId: priority.id,
       comments: {
         upsert: issue.comments.map((comment) => {
           const commentInput: Omit<Prisma.CommentCreateInput, "issue"> = {
-            id: comment.id,
             message: comment.message,
             user: { connect: { id: comment.user.id } },
           };

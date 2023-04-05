@@ -1,7 +1,8 @@
-export type UserId = string;
+export type UserId = number;
 export type User = {
   id: UserId;
-  name: string;
+  firstName: string;
+  lastName: string;
   image?: string;
   color?: string;
 };

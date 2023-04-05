@@ -2,17 +2,17 @@ import { Priority } from "./priority";
 
 export const prioritiesMock: Priority[] = [
   {
-    id: "60f1c7f0b9d3b8b2b8b2b8b2",
+    id: 1,
     name: "low",
     order: 0,
   },
   {
-    id: "60f1c7f0b9d3b8b2b8b2b8b3",
+    id: 2,
     name: "medium",
     order: 1,
   },
   {
-    id: "60f1c7f0b9d3b8b2b8b2b8b4",
+    id: 3,
     name: "high",
     order: 2,
   },

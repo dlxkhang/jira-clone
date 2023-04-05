@@ -1,7 +1,7 @@
 import { User } from "@domain/user";
 import { Category } from "@domain/category";
 
-export type ProjectId = string;
+export type ProjectId = number;
 export interface Project {
   id: ProjectId;
   name: string;

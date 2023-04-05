@@ -1,11 +1,11 @@
-import { User, UserId } from "../user";
+import { User } from "../user";
 import { CategoryType } from "@domain/category";
 import { Comment } from "../comment";
 import { Priority } from "../priority";
 
-export type IssueId = string;
+export type IssueId = number;
 export interface Issue {
-  id: UserId;
+  id: IssueId;
   name: string;
   description?: string;
   categoryType?: CategoryType;
