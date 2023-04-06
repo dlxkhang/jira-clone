@@ -11,7 +11,8 @@ export const loader: LoaderFunction = async () => {
 
 export function CatchBoundary() {
   const params = useParams();
-  const projectId = params.projectId as ProjectId;
+  const projectId = params.projectId as unknown as ProjectId;
+  if (typeof projectId !== "number") throw new Error("Invalid project ID");
   const slug = params["*"] as string;
   const errorMessage = `The section "/${slug}" does not exists, so a fallback 404 is shown (check network tab). Navigate to boards page`;
   return (

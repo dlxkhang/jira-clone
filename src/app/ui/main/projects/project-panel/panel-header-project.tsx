@@ -10,7 +10,7 @@ export const PanelHeaderProject = ({
     <div className="flex">
       <span className="flex flex-grow items-center">
         <span className="ml-1 text-font-light text-opacity-80 dark:text-font-light-dark">
-          {id}
+          {id || "Create new project"}
         </span>
       </span>
       <Link
@@ -24,5 +24,5 @@ export const PanelHeaderProject = ({
 };
 
 interface PanelHeaderProjectProps {
-  id: IssueId;
+  id?: IssueId;
 }

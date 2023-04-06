@@ -87,7 +87,7 @@ export const ProjectPanelView = ({ project, users }: Props): JSX.Element => {
           <Dialog.Overlay
             id="project-panel-overlay"
             className={cx(
-              "absolute top-0 left-0 z-50 box-border grid h-full w-full place-items-center overflow-y-auto bg-black bg-opacity-50 py-[40px] px-[40px]",
+              "absolute left-0 top-0 z-50 box-border grid h-full w-full place-items-center overflow-y-auto bg-black bg-opacity-50 px-[40px] py-[40px]",
               "radix-state-open:animate-fade-in duration-300",
               !isOpen && "bg-opacity-0"
             )}
@@ -96,15 +96,15 @@ export const ProjectPanelView = ({ project, users }: Props): JSX.Element => {
               onEscapeKeyDown={handleProgrammaticClose}
               onPointerDownOutside={handleProgrammaticClose}
               className={cx(
-                "relative z-50 w-4/5 max-w-[600px] rounded-md bg-white py-6 px-8 shadow-lg dark:bg-dark-300",
+                "relative z-50 w-4/5 max-w-[600px] rounded-md bg-white px-8 py-6 shadow-lg dark:bg-dark-300",
                 "duration-300 radix-state-open:animate-slide-up",
                 !isOpen && "translate-y-[10px] opacity-0"
               )}
             >
-              <PanelHeaderProject id={project?.id || "Create new project"} />
+              <PanelHeaderProject id={project?.id} />
               <Form method="post" ref={formRef}>
                 <div className="mb-6">
-                  <Dialog.Title className="mt-5 mb-8 -ml-3">
+                  <Dialog.Title className="-ml-3 mb-8 mt-5">
                     <Title
                       initTitle={project?.name || ""}
                       maxLength={30}
@@ -129,7 +129,7 @@ export const ProjectPanelView = ({ project, users }: Props): JSX.Element => {
                         >
                           <span className="flex items-center gap-4">
                             <UserAvatar {...user} size={48} />
-                            <span>{user.name}</span>
+                            <span>{`${user.firstName} ${user.lastName}`}</span>
                           </span>
                           <Checkbox.Root
                             id={`checkbox-${user.id}`}
@@ -155,7 +155,7 @@ export const ProjectPanelView = ({ project, users }: Props): JSX.Element => {
                     type="submit"
                     name="_action"
                     value="upsert"
-                    className="flex w-fit cursor-pointer items-center gap-4 justify-self-center rounded border-none bg-primary-main py-2 px-8 font-primary-bold text-lg text-white enabled:hover:bg-primary-main-hover disabled:cursor-not-allowed disabled:opacity-60"
+                    className="flex w-fit cursor-pointer items-center gap-4 justify-self-center rounded border-none bg-primary-main px-8 py-2 font-primary-bold text-lg text-white enabled:hover:bg-primary-main-hover disabled:cursor-not-allowed disabled:opacity-60"
                     disabled={fetcher.state !== "idle"}
                     aria-label="Accept changes"
                   >
@@ -180,7 +180,7 @@ export const ProjectPanelView = ({ project, users }: Props): JSX.Element => {
       {/* To avoid hydration issues because a missmatch with the server*/}
       <div
         ref={setPortalContainer}
-        className="fixed top-0 left-0 w-full h-full z-50"
+        className="fixed left-0 top-0 z-50 h-full w-full"
       />
     </>
   );

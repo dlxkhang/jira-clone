@@ -21,11 +21,12 @@ import { Description } from "@app/components/description";
 import { Kbd } from "@app/components/kbd-placeholder";
 import { formatDateTime } from "@utils/formatDateTime";
 import { PanelHeaderIssue } from "./panel-header-issue";
-import { CreateComment } from "./comment/create-comment";
+import { CreateComment, TempComment } from "./comment/create-comment";
 import { ViewComment } from "./comment/view-comment";
 import { SelectStatus } from "./select-status";
 import { SelectPriority } from "./select-priority";
 import { SelectAsignee } from "./select-asignee";
+import { Prisma } from "@prisma/client";
 
 export const IssuePanel = ({ issue }: Props): JSX.Element => {
   const [isOpen, setIsOpen] = useState(true);
@@ -83,8 +84,9 @@ export const IssuePanel = ({ issue }: Props): JSX.Element => {
     setIsOpen(false);
   };
 
-  const addComment = (newComment: Comment): void => {
-    setComments([...comments, newComment]);
+  const addComment = (newComment: Prisma.CommentCreateInput): void => {
+    // TODO: Enable this when the API is ready
+    // setComments([...comments, newComment]);
   };
 
   const removeComment = (commentId: CommentId): void => {
@@ -130,10 +132,10 @@ export const IssuePanel = ({ issue }: Props): JSX.Element => {
               )}
             >
               <PanelHeaderIssue
-                id={issue?.id || "Create new issue"}
+                id={issue?.id}
                 deleteDisabled={
-                  userIsNotReporter ||
-                  defaultIssuesIds.includes(issue?.id || "")
+                  userIsNotReporter || (issue  &&
+                  defaultIssuesIds.includes(issue.id))
                 }
               />
               <Form method="post" onSubmit={handleFormSumbit} ref={formRef}>
@@ -200,7 +202,7 @@ export const IssuePanel = ({ issue }: Props): JSX.Element => {
                           name="reporter"
                           value={reporter.id}
                         />
-                        <p className="m-0">{reporter.name}</p>
+                        <p className="m-0">{`${reporter.firstName} ${reporter.lastName}`}</p>
                       </div>
                     </div>
                     <div>

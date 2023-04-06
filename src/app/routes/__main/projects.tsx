@@ -10,6 +10,7 @@ import { getProjectsSummary, deleteProject } from "@infrastructure/db/project";
 import { getUserSession } from "@app/session-storage";
 import { ProjectsView } from "@app/ui/main/projects";
 import { getAuth } from "@clerk/remix/ssr.server";
+import { getUserByEmail } from "@infrastructure/db/user";
 
 export const meta: MetaFunction = () => {
   const title = "Jira clone - Projects";
@@ -48,15 +49,30 @@ type LoaderData = {
 };
 
 export const loader: LoaderFunction = async (args) => {
-    const { userId, sessionId } = await getAuth(args);
+  const userSession = await getUserSession(args);
+  const userId = userSession.getUser();
 
-    if (!userId) {
-      return redirect("/login");
+  if (!userId) {
+    const { user } = await getAuth(args);
+
+    if (!user) {
+      redirect("/login");
+      return null;
     }
 
-  const projectsSummary = await getProjectsSummary(userId);
+    const dbUser = await getUserByEmail(user.emailAddresses[0].emailAddress);
+    if (!dbUser) throw new Response("Not Found", { status: 404 });
+    userSession.setUser(dbUser.id);
+  } else {
+    const projectsSummary = await getProjectsSummary(userId);
 
-  return json<LoaderData>({ projectsSummary });
+    return json<LoaderData>(
+      { projectsSummary },
+      {
+        headers: { "Set-Cookie": await userSession.commit() },
+      }
+    );
+  }
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -64,7 +80,8 @@ export const action: ActionFunction = async ({ request }) => {
   const _action = formData.get("_action") as string;
 
   if (_action === "delete") {
-    const projectId = formData.get("projectId") as ProjectId;
+    const projectId = formData.get("projectId") as unknown as ProjectId;
+    if (typeof projectId !== "number") throw new Error("Invalid project ID");
 
     projectId
       ? await deleteProject(projectId)

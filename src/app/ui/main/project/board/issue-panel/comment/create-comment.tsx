@@ -3,6 +3,7 @@ import { Comment } from "@domain/comment";
 import { useUserStore } from "@app/store/user.store";
 import { UserAvatar } from "@app/components/user-avatar";
 import { EditBox } from "./edit-box";
+import { Prisma } from "@prisma/client";
 
 export const CreateComment = ({
   addComment,
@@ -11,11 +12,20 @@ export const CreateComment = ({
 
   const save = (message: string) => {
     addComment({
-      id: "temp-" + uuid(),
-      user,
       message,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: Date(),
+      updatedAt: Date(),
+      // TODO: Add issue and user
+      issue: {
+        create: undefined,
+        connectOrCreate: undefined,
+        connect: undefined
+      },
+      user: {
+        create: undefined,
+        connectOrCreate: undefined,
+        connect: undefined
+      }
     });
   };
 
@@ -27,6 +37,10 @@ export const CreateComment = ({
   );
 };
 
-interface CreateCommentProps {
-  addComment: (comment: Comment) => void;
+ interface CreateCommentProps {
+  addComment: (comment: Prisma.CommentCreateInput) => void;
+}
+
+export interface TempComment extends Omit<Comment, "id"> {
+  id: string;
 }

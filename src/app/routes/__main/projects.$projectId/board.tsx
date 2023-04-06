@@ -60,7 +60,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url);
   const sortByParam = url.searchParams.get("sortBy") as string;
   const sortBy = isValidSort(sortByParam) ? sortByParam : DEFAULT_SORT;
-  const projectId = params.projectId as ProjectId;
+  const projectId = params.projectId as unknown as ProjectId;
+  if (typeof projectId !== "number") throw new Error("Invalid project ID");
 
   invariant(params.projectId, `params.projectId is required`);
 
@@ -86,8 +87,10 @@ export const action: ActionFunction = async ({ request }) => {
   const _action = formData.get("_action") as string;
 
   if (_action === "updateIssueCategory") {
-    const categoryId = formData.get("categoryId") as CategoryId;
-    const issueId = formData.get("issueId") as IssueId;
+    const categoryId = formData.get("categoryId") as unknown as CategoryId;
+    if (typeof categoryId !== "number") throw new Error("Invalid category ID");
+    const issueId = formData.get("issueId") as unknown as IssueId;
+    if (typeof issueId !== "number") throw new Error("Invalid issue ID");
     const inputData: UpdateIssueCategoryData = {
       categoryId,
       issueId,

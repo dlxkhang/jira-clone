@@ -72,8 +72,8 @@ export type ActionData = {
 };
 
 export const loader: LoaderFunction = async ({ params }) => {
-  const projectId = params.projectId as ProjectId;
-  const issueId = params.issueId as IssueId;
+  const projectId = params.projectId as unknown as ProjectId;
+  const issueId = params.issueId as unknown as IssueId;
 
   invariant(params.projectId, `params.projectId is required`);
 
@@ -89,8 +89,8 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const id = params.issueId as IssueId;
-  const projectId = params.projectId as ProjectId;
+  const id = params.issueId as unknown as IssueId;
+  const projectId = params.projectId as unknown as ProjectId;
   const formData = await request.formData();
   const _action = formData.get("_action") as string;
   const url = new URL(request.url);
@@ -103,10 +103,10 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (_action === "upsert") {
     const name = formData.get("title") as string;
     const description = formData.get("description") as string;
-    const categoryId = formData.get("status") as CategoryId;
+    const categoryId = formData.get("status") as unknown as CategoryId;
     const priority = formData.get("priority") as PriorityStatus;
-    const asigneeId = formData.get("asignee") as UserId;
-    const reporterId = formData.get("reporter") as UserId;
+    const asigneeId = formData.get("asignee") as unknown as UserId;
+    const reporterId = formData.get("reporter") as unknown as UserId;
     const comments = JSON.parse(
       formData.get("comments") as string
     ) as Comment[];
@@ -138,7 +138,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   }
 
   if (_action === "deleteComment") {
-    const commentId = formData.get("commentId") as CommentId;
+    const commentId = formData.get("commentId") as unknown as CommentId;
 
     if (!commentId) return null;
 

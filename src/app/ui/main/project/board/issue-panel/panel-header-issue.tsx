@@ -20,7 +20,7 @@ export const PanelHeaderIssue = ({
           <TaskIcon size={20} />
         </span>
         <span className="ml-1 text-font-light text-opacity-80 dark:text-font-light-dark">
-          {id}
+          {id || "Create new issue"}
         </span>
       </span>
       <DeleteIssueModalDialog disabled={deleteDisabled} />
@@ -36,7 +36,7 @@ export const PanelHeaderIssue = ({
 };
 
 interface PanelHeaderIssueProps {
-  id: IssueId;
+  id?: IssueId;
   deleteDisabled?: boolean;
 }
 

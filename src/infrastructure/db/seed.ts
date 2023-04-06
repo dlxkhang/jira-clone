@@ -63,7 +63,6 @@ const createCategoryIfNotExists = async (
   return db.category.upsert({
     where: { id: category.id },
     create: {
-      id: category.id,
       type: category.type,
       name: category.name,
       order: category.order,
@@ -77,7 +76,6 @@ const createIssueIfNotExists = async (issue: Issue, categoryId: CategoryId): Pro
   return db.issue.upsert({
     where: { id: issue.id },
     create: {
-      id: issue.id,
       name: issue.name,
       description: issue.description,
       category: { connect: { id: categoryId } },

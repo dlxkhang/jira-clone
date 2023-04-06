@@ -48,8 +48,9 @@ export const CategoryColumn = (props: CategoryColumnProps): JSX.Element => {
     fetcher.submit(
       {
         _action: "updateIssueCategory",
-        issueId: item.issueId,
-        categoryId: category.id,
+        issueId: item.issueId.toString(),
+        categoryId: category.id.toString(),
+        
       },
       {
         method: "post",

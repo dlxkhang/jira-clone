@@ -66,7 +66,7 @@ export const action: ActionFunction = async ({ request }) => {
   const _action = formData.get("_action") as string;
   const name = formData.get("title") as string;
   const description = formData.get("description") as string;
-  const users = formData.getAll("user") as UserId[];
+  const users = formData.getAll("user") as unknown as UserId[];
 
   if (!(_action === "upsert" || _action === "delete")) {
     throw new Error(

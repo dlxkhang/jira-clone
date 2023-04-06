@@ -37,11 +37,11 @@ export const SelectPriority = ({ initPriority }: Props): JSX.Element => {
           {prioritiesMock.map((priority, index) => (
             <SelectItem
               key={index}
-              value={priority.id}
+              value={priority.id.toString()}
               className="text-xs uppercase"
             >
               <SelectItemIndicator />
-              <PriorityIcon priority={priority.id} />
+              <PriorityIcon priority={priority.name} />
               <Select.ItemText>{priority.name}</Select.ItemText>
             </SelectItem>
           ))}

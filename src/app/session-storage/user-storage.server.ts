@@ -1,6 +1,7 @@
-import { createCookieSessionStorage } from "@remix-run/node";
+import { DataFunctionArgs, createCookieSessionStorage } from "@remix-run/node";
 import { UserId } from "@domain/user";
 import { SESSION_SECRET } from "./shared";
+import { getAuth } from "@clerk/remix/ssr.server";
 
 const _30daysInSeconds = 60 * 60 * 24 * 30;
 const USER_SESSION_KEY = "userId";
@@ -17,8 +18,15 @@ const userStorage = createCookieSessionStorage({
   },
 });
 
-export const getUserSession = async (request: Request) => {
+export const getUserSession = async (args: DataFunctionArgs) => {
+  const { request } = args;
   const session = await userStorage.getSession(request.headers.get("Cookie"));
+
+  // Check if the third-party session is still valid, in this case we use Clerk's session
+  const { sessionId } = await getAuth(args);
+  if (!sessionId) {
+    userStorage.destroySession(session);
+  }
 
   return {
     getUser: (): UserId | null => {

@@ -54,7 +54,7 @@ type LoaderData = {
 };
 
 export const loader: LoaderFunction = async ({ params }) => {
-  const projectId = params.projectId as ProjectId;
+  const projectId = params.projectId as unknown as ProjectId;
 
   invariant(params.projectId, `params.projectId is required`);
   return json<LoaderData>({ projectId });
@@ -67,7 +67,7 @@ export type ActionData = {
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const projectId = params.projectId as ProjectId;
+  const projectId = params.projectId as unknown as ProjectId;
   const formData = await request.formData();
   const _action = formData.get("_action") as string;
   const url = new URL(request.url);
@@ -80,10 +80,10 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (_action === "upsert") {
     const name = formData.get("title") as string;
     const description = formData.get("description") as string;
-    const categoryId = formData.get("status") as CategoryId;
+    const categoryId = formData.get("status") as unknown as CategoryId;
     const priority = formData.get("priority") as PriorityStatus;
-    const asigneeId = formData.get("asignee") as UserId;
-    const reporterId = formData.get("reporter") as UserId;
+    const asigneeId = formData.get("asignee") as unknown as UserId;
+    const reporterId = formData.get("reporter") as unknown as UserId;
     const comments = JSON.parse(
       formData.get("comments") as string
     ) as Comment[];

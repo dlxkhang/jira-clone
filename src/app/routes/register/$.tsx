@@ -1,38 +1,41 @@
-import type { LoaderFunction, ActionFunction } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-import { User } from "@domain/user";
-import { getUsers } from "@infrastructure/db/user";
+import type { ActionFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
+import { User, getRandomPastelColor } from "@domain/user";
+import { createUser } from "@infrastructure/db/user";
 import { getUserSession } from "@app/session-storage";
-import { LoginView } from "@app/ui/login";
 import { RegisterView } from "@app/ui/register";
+import { getAuth } from "@clerk/remix/ssr.server";
+import { Prisma } from "@prisma/client";
 
-type LoaderData = {
-  users: User[];
-};
+export const action: ActionFunction = async (args) => {
+  const { user } = await getAuth(args);
 
-export const loader: LoaderFunction = async () => {
-  const users = await getUsers();
-  return json<LoaderData>({ users });
-};
+  if (!user) return redirect("/login");
 
-export const action: ActionFunction = async ({ request }) => {
-  const formData = await request.formData();
-  const _action = formData.get("_action") as string;
+  const userCreateInput: Prisma.UserCreateInput = {
+    email: user.emailAddresses[0].emailAddress,
+    firstName: user.firstName!,
+    lastName: user.lastName!,
+    color: getRandomPastelColor(),
+  };
 
-  if (_action === "setUser") {
-    const userId = formData.get("user") as string;
-    const userSession = await getUserSession(request);
-    userSession.setUser(userId);
-
-    return redirect("/projects", {
-      headers: { "Set-Cookie": await userSession.commit() },
+  let newUser: User;
+  try {
+    newUser = await createUser(userCreateInput);
+  } catch (error) {
+    throw new Response("Bad Request", {
+      status: 500,
     });
   }
-  console.error("Unknown action", _action);
+  
+  const userSession = await getUserSession(args);
+  userSession.setUser(newUser.id);
+
+  return redirect("/projects", {
+    headers: { "Set-Cookie": await userSession.commit() },
+  });
 };
 
 export default function RegisterRoute() {
-
   return <RegisterView />;
 }

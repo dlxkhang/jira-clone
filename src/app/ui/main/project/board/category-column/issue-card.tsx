@@ -19,7 +19,7 @@ export const IssueCard = ({
   isSubmitting,
   handleDragging,
 }: IssueCardProps): JSX.Element => {
-  const issueIdPrefix = issue.id.split("-")[0];
+  const issueIdPrefix = issue.id;
   const sortBy = useSortBy();
   const issueLink = sortBy
     ? `issue/${issue.id}?sortBy=${sortBy}`
@@ -64,7 +64,7 @@ export const IssueCard = ({
                 {issueIdPrefix}
               </span>
             </span>
-            <PriorityIcon priority={issue.priority.id} />
+            <PriorityIcon priority={issue.priority.name} />
           </div>
         </>
       </Link>

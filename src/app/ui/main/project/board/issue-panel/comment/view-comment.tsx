@@ -23,10 +23,10 @@ export const ViewComment = ({
   const remove = () => {
     removeComment(comment.id);
 
-    if (comment.id.startsWith("temp-")) return;
+    if (comment.id.toString().startsWith("temp-")) return;
 
     fetcher.submit(
-      { commentId: comment.id, _action: "deleteComment" },
+      { commentId: comment.id.toString(), _action: "deleteComment" },
       { method: "delete" }
     );
   };
@@ -71,7 +71,7 @@ export const ViewComment = ({
       <UserAvatar {...comment.user} />
       <div style={{ width: "100%" }}>
         <p className="mr-4 inline-block font-primary-bold">
-          {comment.user.name}
+          {`${comment.user.firstName} ${comment.user.lastName}`}
         </p>
         <span className="font-primary-light text-xs">
           {comment.createdAt ? (

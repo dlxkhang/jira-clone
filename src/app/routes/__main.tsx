@@ -12,23 +12,34 @@ type LoaderData = {
 };
 
 export const loader: LoaderFunction = async (args) => {
-  const { userId, sessionId } = await getAuth(args);
+  const userSession = await getUserSession(args);
+  const userId = userSession.getUser();
 
   if (!userId) {
-    return redirect("/login");
-  }
+    const { user } = await getAuth(args);
 
-  const user = await getUser(userId);
+    if (!user) {
+      redirect("/login");
+      return null;
+    }
 
-  if (!user) {
-    throw new Response("Not Found", {
-      status: 404,
-    });
-  }
+    const dbUser = await getUserByEmail(user.emailAddresses[0].emailAddress);
+    if (!dbUser) throw new Response("Not Found", { status: 404 });
+    userSession.setUser(dbUser.id);
+    return json<LoaderData>(
+      { user },
+      {
+        headers: { "Set-Cookie": await userSession.commit() },
+      }
+    );
+  } 
+  return json<LoaderData>(
+    { user },
+    {
+      headers: { "Set-Cookie": await userSession.commit() },
+    }
+  );
 
-  return json<LoaderData>({
-    user: user,
-  });
 };
 
 export default function AppRoute() {

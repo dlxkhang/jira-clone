@@ -3,7 +3,8 @@ import { User } from "@domain/user";
 import { Tooltip } from "@app/components/tooltip";
 
 export const UserAvatar = ({
-  name,
+  firstName,
+  lastName,
   image,
   color,
   size = 36,
@@ -16,20 +17,21 @@ export const UserAvatar = ({
     minWidth: `${size}px`,
     height: `${size}px`,
   };
-  const acronym = name
+  const fullName = `${firstName} ${lastName}`;
+  const acronym = fullName
     .split(" ")
     .slice(0, 2)
     .map((word) => word[0].toUpperCase())
     .join("");
 
   return (
-    <Tooltip title={name} show={tooltip}>
+    <Tooltip title={fullName} show={tooltip}>
       <Avatar.Root className="flex items-center rounded-full" style={imageSize}>
         <Avatar.Image
           className="rounded-full object-cover"
           src={image && imageSrc}
           style={imageSize}
-          alt={name}
+          alt={fullName}
         />
         <Avatar.Fallback
           delayMs={0}

@@ -47,8 +47,9 @@ type LoaderData = {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url);
-  const projectId = params.projectId as ProjectId;
-
+  const projectId = params.projectId as unknown as ProjectId;
+  if (typeof projectId !== "number") throw new Error("Invalid project ID");
+  
   invariant(params.projectId, `params.projectId is required`);
 
   const projectSummary = await getProjectSummary(projectId);

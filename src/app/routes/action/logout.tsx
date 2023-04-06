@@ -4,8 +4,8 @@ import { getUserSession } from "@app/session-storage";
 
 export const loader = () => redirect("/", { status: 404 });
 
-export const action: ActionFunction = async ({ request }) => {
-  const userSession = await getUserSession(request);
+export const action: ActionFunction = async (args) => {
+  const userSession = await getUserSession(args);
 
   return redirect("/login", {
     headers: { "Set-Cookie": await userSession.destroyUser() },

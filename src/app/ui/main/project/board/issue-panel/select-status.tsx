@@ -35,8 +35,8 @@ export const SelectStatus = ({ initStatus }: Props): JSX.Element => {
   return (
     <Select.Root
       name="status"
-      defaultValue={defaultValue}
-      onValueChange={onValueChange}
+      defaultValue={defaultValue.toString()}
+      onValueChange={(value) => onValueChange(value as unknown as CategoryId)}
     >
       <SelectTrigger
         aria-label="Open status select"
@@ -54,7 +54,7 @@ export const SelectStatus = ({ initStatus }: Props): JSX.Element => {
         <Select.ScrollUpButton />
         <Select.Viewport>
           {categories.map((category, index) => (
-            <SelectItem key={index} value={category.id}>
+            <SelectItem key={index} value={category.id.toString()}>
               <SelectItemIndicator />
               <span
                 className={cx(

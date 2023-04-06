@@ -30,8 +30,8 @@ export const SelectAsignee = ({ initAsignee }: Props): JSX.Element => {
   return (
     <Select.Root
       name="asignee"
-      defaultValue={initAsignee.id}
-      onValueChange={onValueChange}
+      defaultValue={initAsignee.id.toString()}
+      onValueChange={(value) => onValueChange(value as unknown as UserId)}
     >
       <SelectTrigger aria-label="Open asignee select">
         <div className="mr-2">
@@ -44,10 +44,10 @@ export const SelectAsignee = ({ initAsignee }: Props): JSX.Element => {
         <Select.ScrollUpButton />
         <Select.Viewport>
           {users.map((user, index) => (
-            <SelectItem key={index} value={user.id}>
+            <SelectItem key={index} value={user.id.toString()}>
               <SelectItemIndicator />
               <UserAvatar {...user} />
-              <Select.ItemText>{user.name}</Select.ItemText>
+              <Select.ItemText>{`${user.firstName} ${user.lastName}`}</Select.ItemText>
             </SelectItem>
           ))}
           <Select.Separator />
